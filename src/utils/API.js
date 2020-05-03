@@ -3,13 +3,17 @@ import axios from "axios";
 // Export an object containing methods we'll use for accessing the Dog.Ceo API
 
 export default {
-  getRandomDog: function() {
-    return axios.get("https://dog.ceo/api/breeds/image/random");
+  getEmployeeImage: function () {
+    return axios.get("https://randomuser.me/api/portraits/thumb/men/75.jpg");
   },
-  getDogsOfBreed: function(breed) {
+  getDogsOfBreed: function (breed) {
     return axios.get("https://dog.ceo/api/breed/" + breed + "/images");
   },
-  getBaseBreedsList: function() {
+  getBaseBreedsList: function () {
     return axios.get("https://dog.ceo/api/breeds/list");
+  },
+  getRandomEmployees: function () {
+
+    return axios.get('https://randomuser.me/api/?results=3');
   }
 };
