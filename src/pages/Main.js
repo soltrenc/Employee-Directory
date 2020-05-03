@@ -16,24 +16,27 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    console.log('happned in the begging!!!')
+    console.log('happened in the beggining!!!')
     // smack api get random ppl
-    var self = this
+    var self = this;
     API.getRandomEmployees().then(function (data) {
       console.log("got a random employee", data.data.results);
-      var employees = data.data.results
+      var employees = data.data.results;
 
       var newEmps = []
       for (var i = 0; i < employees.length; i++) {
         var newEmp = {
+          image: employees[i].image,
           name: employees[i].name.first,
-
+          lastName: employees[i].name.last,
+          email: employees[i].email,
+          phone: employees[i].phone,
         }
         newEmps.push(newEmp)
         console.log('looping ??', employees[i].name.first)
 
       }
-      console.log('Do we ahve just what we need newEmps', newEmps)
+      console.log('Do we have just what we need newEmps', newEmps)
       self.setState({
         employees:
           newEmps
@@ -47,7 +50,7 @@ class Main extends Component {
     if (this.state.nameOrder === 'asc') {
       var newORder = this.state.employees.sort(function (a, b) {
         var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
-        if (nameA < nameB) //sort string ascending
+        if (nameA < nameB) //sort string descending
           return 1
         if (nameA > nameB)
           return -1
@@ -101,7 +104,8 @@ class Main extends Component {
                   <tr>
                     <th>#</th>
                     <th> Image </th>
-                    <th onClick={this.handleName}> Name </th>
+                    <th onClick={this.handleName}> First Name </th>
+                    <th> Last Name </th>
                     <th> Email </th>
                     <th> DOB </th>
                     <th> Phone Number</th>
@@ -112,11 +116,12 @@ class Main extends Component {
                     return (
                       <tr>
                         <td>1</td>
-                        <td></td>
+                        <td> {singleEmp.image} </td>
                         <td>{singleEmp.name}</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
+                        <td>{singleEmp.lastName}</td>
+                        <td> {singleEmp.email}</td>
+                        <td> </td>
+                        <td> {singleEmp.phone} </td>
                       </tr>
                     )
                   })}
