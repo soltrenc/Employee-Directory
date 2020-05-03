@@ -115,7 +115,7 @@ class Main extends Component {
                   {this.state.employees.map(function (singleEmp) {
                     return (
                       <tr>
-                        <td>1</td>
+                        <td> 1 </td>
                         <td> {singleEmp.image} </td>
                         <td>{singleEmp.name}</td>
                         <td>{singleEmp.lastName}</td>

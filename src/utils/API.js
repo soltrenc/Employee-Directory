@@ -6,14 +6,7 @@ export default {
   getEmployeeImage: function () {
     return axios.get("https://randomuser.me/api/portraits/thumb/men/75.jpg");
   },
-  getDogsOfBreed: function (breed) {
-    return axios.get("https://dog.ceo/api/breed/" + breed + "/images");
-  },
-  getBaseBreedsList: function () {
-    return axios.get("https://dog.ceo/api/breeds/list");
-  },
   getRandomEmployees: function () {
-
-    return axios.get('https://randomuser.me/api/?results=3');
+    return axios.get('https://randomuser.me/api/?results=10');
   }
 };
