@@ -26,7 +26,7 @@ class Main extends Component {
       var newEmps = []
       for (var i = 0; i < employees.length; i++) {
         var newEmp = {
-          image: employees[i].image,
+          picture: employees[i].medium,
           name: employees[i].name.first,
           lastName: employees[i].name.last,
           email: employees[i].email,
@@ -102,7 +102,7 @@ class Main extends Component {
               <Table responsive>
                 <thead>
                   <tr>
-                    <th>#</th>
+                    <th> # </th>
                     <th> Image </th>
                     <th onClick={this.handleName}> First Name </th>
                     <th> Last Name </th>
