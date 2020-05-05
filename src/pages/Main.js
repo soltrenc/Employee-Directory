@@ -16,8 +16,6 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    console.log('happened in the beggining!!!')
-    // smack api get random ppl
     var self = this;
     API.getRandomEmployees().then(function (data) {
       console.log("got a random employee", data.data.results);
@@ -25,12 +23,15 @@ class Main extends Component {
 
       var newEmps = []
       for (var i = 0; i < employees.length; i++) {
+        let id = 1;
         var newEmp = {
-          picture: employees[i].medium,
+          id: + 1,
           name: employees[i].name.first,
           lastName: employees[i].name.last,
           email: employees[i].email,
           phone: employees[i].phone,
+          dob: employees[i].dob.date,
+          image: employees[i].picture.thumbnail,
         }
         newEmps.push(newEmp)
         console.log('looping ??', employees[i].name.first)
@@ -42,8 +43,6 @@ class Main extends Component {
           newEmps
       })
     });
-    // strip just info we want
-    //do a this.setState({})
   }
 
   handleName = () => {
@@ -85,6 +84,7 @@ class Main extends Component {
 
 
     console.log('this is our state!!', this.state);
+
     return (
       <div>
         <Hero background-color="navy blue" margin-bottom="red 5px">
@@ -102,7 +102,7 @@ class Main extends Component {
               <Table responsive>
                 <thead>
                   <tr>
-                    <th> # </th>
+                    <th> ID </th>
                     <th> Image </th>
                     <th onClick={this.handleName}> First Name </th>
                     <th> Last Name </th>
@@ -113,36 +113,19 @@ class Main extends Component {
                 </thead>
                 <tbody>
                   {this.state.employees.map(function (singleEmp) {
+                    console.log("dob:", singleEmp.dob)
                     return (
                       <tr>
-                        <td> 1 </td>
+                        <td> {singleEmp.id} </td>
                         <td> {singleEmp.image} </td>
                         <td>{singleEmp.name}</td>
                         <td>{singleEmp.lastName}</td>
                         <td> {singleEmp.email}</td>
-                        <td> </td>
+                        <td> {singleEmp.dob.toLocaleString()} </td>
                         <td> {singleEmp.phone} </td>
                       </tr>
                     )
                   })}
-                  {/* <tr>
-                    <td>2</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                  </tr> */}
                 </tbody>
               </Table>
             </Col>
