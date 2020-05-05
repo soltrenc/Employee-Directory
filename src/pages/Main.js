@@ -5,15 +5,33 @@ import Container from "../components/Container";
 import Row from "../components/Row";
 import Col from "../components/Col";
 import Table from 'react-bootstrap/Table';
-import SearchForm from "../components/SearchForm";
 import App from "../App";
+import moment from "moment";
 
 
 class Main extends Component {
   state = {
     employees: [],
-    nameOrder: 'asc'
+    filteredEmployees: [],
+    nameOrder: 'asc',
+    showFilter: false
   };
+
+  searchSpace = (e) => {
+    console.log("we're typing in the search bar!", e.target.value)
+    var filteredEmps = []
+    for (var i = 0; i < this.state.employees.length; i++) {
+      var subs = this.state.employees[i].name.substring(0, e.target.value.length);
+      if (subs.toLowerCase() === e.target.value.toLowerCase()) {
+        filteredEmps.push(this.state.employees[i]);
+      }
+    }
+    console.log('did the filter work ??', filteredEmps)
+    this.setState({
+      filteredEmployees: filteredEmps,
+      showFilter: true
+    })
+  }
 
   componentDidMount() {
     var self = this;
@@ -23,19 +41,17 @@ class Main extends Component {
 
       var newEmps = []
       for (var i = 0; i < employees.length; i++) {
-        let id = 1;
         var newEmp = {
-          id: + 1,
           name: employees[i].name.first,
           lastName: employees[i].name.last,
           email: employees[i].email,
           phone: employees[i].phone,
-          dob: employees[i].dob.date,
+          dob: moment(employees[i].dob.date).format('MMMM Do YYYY'),
           image: employees[i].picture.thumbnail,
         }
+        console.log(moment(newEmp.dob).format("MMM Do YY"))
         newEmps.push(newEmp)
         console.log('looping ??', employees[i].name.first)
-
       }
       console.log('Do we have just what we need newEmps', newEmps)
       self.setState({
@@ -85,9 +101,14 @@ class Main extends Component {
 
     console.log('this is our state!!', this.state);
 
+    var pplToShow = this.state.employees
+    if (this.state.showFilter === true) {
+      pplToShow = this.state.filteredEmployees
+    }
+
     return (
       <div>
-        <Hero background-color="navy blue" margin-bottom="red 5px">
+        <Hero>
           <h1>Employee Directory</h1>
           <h2> Click on carrots to filter by heading or use the search bar to narrow results.</h2>
         </Hero>
@@ -99,10 +120,10 @@ class Main extends Component {
           </Row>
           <Row>
             <Col size="md-12">
+              <input type="text" style={{ marginLeft: "50%", marginTop: "20px", marginBottom: "20px", borderRadius: "15px" }} placeholder="Enter item to be searched" onChange={(e) => this.searchSpace(e)} />
               <Table responsive>
                 <thead>
                   <tr>
-                    <th> ID </th>
                     <th> Image </th>
                     <th onClick={this.handleName}> First Name </th>
                     <th> Last Name </th>
@@ -112,12 +133,11 @@ class Main extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.employees.map(function (singleEmp) {
+                  {pplToShow.map(function (singleEmp) {
                     console.log("dob:", singleEmp.dob)
                     return (
                       <tr>
-                        <td> {singleEmp.id} </td>
-                        <td> {singleEmp.image} </td>
+                        <td> <img src={singleEmp.image} /> </td>
                         <td>{singleEmp.name}</td>
                         <td>{singleEmp.lastName}</td>
                         <td> {singleEmp.email}</td>
